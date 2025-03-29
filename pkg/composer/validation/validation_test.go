@@ -34,7 +34,7 @@ func TestValidateComposerJSON(t *testing.T) {
 			description:   "Valid description",
 			stability:     "stable",
 			wantErr:       true,
-			errorContains: "package name must be in the format",
+			errorContains: "包名必须符合",
 		},
 		{
 			name:          "Description too short",

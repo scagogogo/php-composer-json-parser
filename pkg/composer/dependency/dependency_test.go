@@ -90,37 +90,37 @@ func TestValidatePackageName(t *testing.T) {
 			name:          "Empty package name",
 			packageName:   "",
 			wantErr:       true,
-			errorContains: "cannot be empty",
+			errorContains: "包名不能为空",
 		},
 		{
 			name:          "No slash",
 			packageName:   "invalidname",
 			wantErr:       true,
-			errorContains: "format 'vendor/project'",
+			errorContains: "包名必须符合",
 		},
 		{
 			name:          "Invalid vendor name with uppercase",
 			packageName:   "Vendor/project",
 			wantErr:       true,
-			errorContains: "invalid vendor name",
+			errorContains: "无效的供应商名",
 		},
 		{
 			name:          "Invalid project name with uppercase",
 			packageName:   "vendor/Project",
 			wantErr:       true,
-			errorContains: "invalid project name",
+			errorContains: "无效的项目名",
 		},
 		{
 			name:          "Invalid characters in vendor",
 			packageName:   "vendor$/project",
 			wantErr:       true,
-			errorContains: "invalid vendor name",
+			errorContains: "无效的供应商名",
 		},
 		{
 			name:          "Invalid characters in project",
 			packageName:   "vendor/project$",
 			wantErr:       true,
-			errorContains: "invalid project name",
+			errorContains: "无效的项目名",
 		},
 		{
 			name:        "Valid with hyphen",
@@ -149,7 +149,7 @@ func TestValidatePackageName(t *testing.T) {
 				return
 			}
 
-			if err != nil && tt.errorContains != "" && !contains(err.Error(), tt.errorContains) {
+			if err != nil && tt.errorContains != "" && !strings.Contains(err.Error(), tt.errorContains) {
 				t.Errorf("ValidatePackageName() error = %v, should contain %v", err, tt.errorContains)
 			}
 		})
