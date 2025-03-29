@@ -1,0 +1,59 @@
+name: Go
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+        check-latest: true
+
+    - name: Go version
+      run: go version
+
+    - name: Get dependencies
+      run: go mod download
+
+    - name: Test
+      run: go test -v -cover ./...
+
+  examples:
+    name: Run Examples
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+        check-latest: true
+
+    - name: Get dependencies
+      run: go mod download
+
+    - name: Run Basic Usage Example
+      run: cd examples/01_basic_usage && go run main.go
+
+    - name: Run Project Creation Example
+      run: cd examples/02_project_creation && go run main.go
+
+    - name: Run Dependencies Example
+      run: cd examples/03_dependencies && go run main.go
+
+    - name: Run Advanced Example
+      run: cd examples/04_advanced && go run main.go 
